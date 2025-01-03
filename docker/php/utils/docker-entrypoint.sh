@@ -7,6 +7,7 @@
 php artisan migrate --force
 
 php artisan db:seed --class=BookingDiscountSeeder
+php artisan db:seed --class=UserSeeder
 
 # Start Apache
 apache2-foreground

@@ -14,6 +14,10 @@ class UserResource extends JsonResource
      */
     public function toArray($data): array
     {
+        $abilities = [];
+        if($this->id === 1) {
+            $abilities[] = 'access:admin';
+        }
         return [
             'user' => (object)[
                 'id' => $this->id,

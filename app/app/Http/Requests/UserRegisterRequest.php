@@ -15,7 +15,7 @@ class UserRegisterRequest extends FormRequest
     {
         return [
             /**
-             * @example my John doe
+             * @example John doe
              */
             'name' => 'required|string|max:255',
 
