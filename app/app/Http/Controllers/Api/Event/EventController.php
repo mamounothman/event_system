@@ -11,6 +11,8 @@ use App\Models\TicketType;
 use App\Repositories\EventRepository;
 use App\DataTransferObjects\CreateEventDto;
 use App\Services\EventService;
+use App\Exceptions\NotAuthorizedException;
+use App\Exceptions\ModelNotFoundExcpetion;
 
 
 class EventController extends Controller
@@ -32,9 +34,14 @@ class EventController extends Controller
     }
 
     public function show($event) {
-        return EventResource::make(
-            $this->eventService->show($event)
-        );
+        try {
+            return EventResource::make(
+                $this->eventService->show($event)
+            );
+        }
+        catch(NotAuthorizedException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
     }
 
     public function store(CreateEventRequest $request) {
@@ -46,14 +53,26 @@ class EventController extends Controller
     }
 
     public function update(int $event, CreateEventRequest $request) {
-        return $this->eventService->update(
-            $event,
-            CreateEventDto::fromRequest($request)
-        );
+        try {
+            return $this->eventService->update(
+                $event,
+                CreateEventDto::fromRequest($request)
+            );
+        }
+        catch(NotAuthorizedException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
     }
 
     public function delete(int $event, Request $request) {
-        // TODO through all exception if not found
-        return $this->eventService->delete($event);
+        try {
+            return $this->eventService->delete($event);
+        }
+        catch(NotAuthorizedException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
+        catch(ModelNotFoundExcpetion $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 }

@@ -12,16 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('booking_discount_event', function (Blueprint $table) {
-            $table->foreignId('event_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreignId('booking_discount_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->id();
+            $table->foreignId('event_id');
+            // foreignId
+            //     ->constrained()
+            //     ->onUpdate('cascade')
+            //     ->onDelete('cascade');
+            $table->integer('booking_discount_id');
+            // foreignId
+            //     ->constrained()
+            //     ->onUpdate('cascade')
+            //     ->onDelete('cascade');
 
-            $table->primary(['event_id', 'booking_discount_id']);
+            $table->index(['event_id', 'booking_discount_id']);
             $table->index('event_id');
             $table->index('booking_discount_id');
         });

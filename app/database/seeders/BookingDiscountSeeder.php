@@ -20,14 +20,14 @@ class BookingDiscountSeeder extends Seeder
         }
 
         DB::table('booking_discounts')->insert([
-            'description' => '',
+            'description' => '30% discount for the first 10% bookings',
             'discount_amount' => 30,
             'rule' => 0.3,
             'invert' => 0
         ]);
 
         DB::table('booking_discounts')->insert([
-            'description' => '',
+            'description' => '10% discount for the last 10% bookings',
             'discount_amount' => 30,
             'rule' => 0.3,
             'invert' => 1

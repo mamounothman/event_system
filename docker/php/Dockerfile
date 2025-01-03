@@ -8,6 +8,7 @@ ADD app .
 
 COPY ./app/.env.example ./.env
 
+USER root
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     zip \
@@ -16,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \ 
     && docker-php-ext-install pdo_mysql zip \
     && a2enmod rewrite
+
 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -27,7 +29,7 @@ RUN chmod +x /usr/bin/wait-for-it
 # Copy entrypoint script
 COPY ./docker/php/utils/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 RUN chmod +x /usr/bin/docker-entrypoint.sh
-
+USER 1001
 # Expose port 80
 EXPOSE 80
 
